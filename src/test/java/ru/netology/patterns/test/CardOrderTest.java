@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
 import ru.netology.patterns.RegistrationInfo;
 
+import javax.xml.crypto.Data;
 import javax.xml.namespace.QName;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -16,31 +17,15 @@ import java.util.Locale;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
+import static ru.netology.patterns.test.DataGenerator.generateDate;
+import static ru.netology.patterns.test.DataGenerator.planDate;
 
 public class CardOrderTest {
+    private final int daysToAddForFirstMeeting = 4;
+    private final String firstMeetingDate = generateDate(daysToAddForFirstMeeting);
+
     private static Faker faker;
 
-
-    @BeforeAll
-    static void setUpAll() {
-        faker = new Faker(new Locale("ru"));
-    }
-
-
-    @Test
-    public void generateDateWithUtils() {
-        RegistrationInfo info = DataGenerator
-                .Registration
-                .generateByCard("ru");
-        System.out.println();
-
-    }
-
-    public String generateDate(int days) {
-        return LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
-    }
-
-    String planDate = generateDate(3);
 
     @Test
     public void test() {
@@ -56,9 +41,8 @@ public class CardOrderTest {
         $("[data-test-id= replan-notification]");
         $x("// *[text () = 'Перепланировать']").click();
         $("[data-test-id=success-notification]")
-                .shouldHave(Condition.text("Успешно! Встреча успешно запланирована на " + planDate), Duration.ofSeconds(10))
+                .shouldHave(Condition.text("Успешно! Встреча успешно запланирована на " + firstMeetingDate), Duration.ofSeconds(10))
                 .shouldBe(visible);
-
 
     }
 
