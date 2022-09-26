@@ -1,9 +1,9 @@
 package ru.netology.patterns.test;
 
+import lombok.Data;
 import lombok.experimental.UtilityClass;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import ru.netology.patterns.RegistrationInfo;
 import com.github.javafaker.Faker;
 
 import java.time.LocalDate;
@@ -12,12 +12,7 @@ import java.util.Locale;
 
 @UtilityClass
 public class DataGenerator {
-    private static Faker faker;
 
-    @BeforeAll
-    static void setUpAll() {
-        faker = new Faker(new Locale("ru"));
-    }
 
 
     @UtilityClass
@@ -30,19 +25,14 @@ public class DataGenerator {
         }
     }
 
-    @Test
-    public void generateDateWithUtils() {
-        RegistrationInfo info = DataGenerator
-                .Registration
-                .generateByCard("ru");
-        System.out.println();
-    }
 
-    public String generateDate(int days) {
+
+    public static String generateDate(int days) {
         return LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
     }
 
 
     String planDate = generateDate(3);
+
 
 }
