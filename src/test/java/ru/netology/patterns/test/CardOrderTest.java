@@ -18,8 +18,6 @@ import static ru.netology.patterns.test.DataGenerator.generateDate;
 public class CardOrderTest {
     private final int daysToAddForFirstMeeting = 4;
     private final String firstMeetingDate = generateDate(daysToAddForFirstMeeting);
-
-
     RegistrationInfo registrationInfo = DataGenerator.Registration.generateByCard("ru");
 
 
@@ -36,11 +34,17 @@ public class CardOrderTest {
         $("[name='phone']").setValue(registrationInfo.getPhone());
         $x("// *[@class='checkbox__box']").click();
         $x("// *[text()='Запланировать']").click();
-        $("[data-test-id= replan-notification]").shouldHave(Condition.text("Необходимо подтверждение У вас уже запланирована встреча на другую дату. Перепланировать?"));
+        $("[data-test-id ='success-notification']").
+                shouldHave(Condition.text("Успешно! Встреча успешно запланирована на" + firstMeetingDate),
+                Duration.ofSeconds(15)).shouldBe(visible);
+        $("[data-test-id='date'] input").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
+        $("[data-test-id='date'] input").setValue(firstMeetingDate);
+        $x("// *[text()='Запланировать']").click();
+        $("[data-test-id= 'replan-notification']").shouldHave(Condition.text("Необходимо подтверждение У вас уже запланирована встреча на другую дату. Перепланировать?"));
         $(byText("Перепланировать")).click();
-        $("[data-test-id=success-notification]")
-                .shouldHave(Condition.text("Успешно! Встреча успешно запланирована на " + firstMeetingDate), Duration.ofSeconds(10))
-                .shouldBe(visible);
+        $("[data-test-id='success-notification']")
+                .shouldHave(Condition.text("Успешно! Встреча успешно запланирована на" + firstMeetingDate),
+                        Duration.ofSeconds(15)).shouldBe(visible);
 
     }
 
