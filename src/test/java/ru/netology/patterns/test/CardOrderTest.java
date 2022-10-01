@@ -35,7 +35,7 @@ public class CardOrderTest {
         $x("// *[@class='checkbox__box']").click();
         $x("// *[text()='Запланировать']").click();
         $("[data-test-id ='success-notification']").
-                shouldHave(Condition.text("Успешно! Встреча успешно запланирована на" + firstMeetingDate),
+                shouldHave(Condition.text("Успешно! Встреча успешно запланирована на " + firstMeetingDate),
                 Duration.ofSeconds(15)).shouldBe(visible);
         $("[data-test-id='date'] input").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
         $("[data-test-id='date'] input").setValue(firstMeetingDate);
@@ -43,7 +43,7 @@ public class CardOrderTest {
         $("[data-test-id= 'replan-notification']").shouldHave(Condition.text("Необходимо подтверждение У вас уже запланирована встреча на другую дату. Перепланировать?"));
         $(byText("Перепланировать")).click();
         $("[data-test-id='success-notification']")
-                .shouldHave(Condition.text("Успешно! Встреча успешно запланирована на" + firstMeetingDate),
+                .shouldHave(Condition.text("Успешно! Встреча успешно запланирована на " + firstMeetingDate),
                         Duration.ofSeconds(15)).shouldBe(visible);
 
     }
